@@ -1,0 +1,24 @@
+.active {
+    background-color: #ffc107;
+    color: #212529 !important;
+    font-weight: bold;
+}
+
+.non-active {
+    color: #ffc107 !important;
+    font-weight: bold;
+}
+
+.text-orange {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.text-dark {
+    color: #212529;
+    font-weight: bold;
+}
+
+.bg-lg-dark {
+    background-color: #2f3238;
+}

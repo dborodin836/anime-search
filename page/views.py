@@ -10,3 +10,6 @@ def home(request):
 def about(request):
     return render(request, 'page/about.html')
 
+
+def search(request):
+    return render(request, 'page/search.html')

@@ -1,1 +1,54 @@
-TEST
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+<div class="bg-lg-dark">
+
+  <!-- Banner -->
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{% static 'img/banner.png' %}" class="d-block mx-lg-auto img-fluid" alt="Banner" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3 text-white">Responsive left-aligned hero with image</h1>
+        <p class="lead text-white">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button type="button" class="btn btn-outline-secondary text-white btn-lg px-4 me-md-2">Primary</button>
+          <button type="button" class="btn btn-outline-secondary text-white btn-lg px-4">Default</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Banner end -->
+
+  <!-- Search area -->
+  <div class="position-relative g-5 py-5">
+    <div class="container position-absolute top-50 start-50 translate-middle">
+      <form action="{% url 'search' %}" method="GET">
+        <div class="form-group">
+          <input class="form-control form-control-lg" type="text" placeholder="Search" name="keyword">
+        </div>
+        <div class="form-group text-center mt-5">
+          <button type="submit" class="fs-2 btn btn-outline-secondary btn-lg px-4 text-white">Search!</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Search area end -->
+
+  <!-- Description -->
+  <div class="bg-lg-dark text-secondary px-4 py-5 text-center">
+    <div class="py-5">
+      <div class="col-lg-6 mx-auto">
+        <p class="fs-5 mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Description end -->
+
+</div>
+{% endblock %}
