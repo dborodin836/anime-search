@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-=p5p4owh(umt-fz3ul^y-%$l#c8u@x8_tv1xrpce1+zv27v(9m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'anime-app-1234.herokuapp.com', 'anime-app-123.herokuapp.com']
 
 
 # Application definition
@@ -37,6 +37,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Anime.urls'
