@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 import json
 
@@ -20,15 +20,17 @@ def search(request):
 
             return render(request, 'result/search.html', data)
 
-    return render(request, 'result/search.html')
+    return redirect('home')
 
 
 def detail(request, anime_id):
     response = requests.get(f'https://kitsu.io/api/edge/anime?filter[id]={anime_id}')
     raw_data = json.loads(response.text)
-    print(raw_data['data'][0])
+    episodes_responce = requests.get(f'https://kitsu.io/api/edge/anime/{anime_id}/episodes')
+    raw_ep_data = json.loads(episodes_responce.text)
 
     data = {
-        'data': raw_data['data'][0]
+        'data': raw_data['data'][0],
+        'ep_data': raw_ep_data['data'],
     }
     return render(request, 'result/detail.html', data)
