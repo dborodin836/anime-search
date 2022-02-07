@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}| Search{% endblock %}
 
 
@@ -22,21 +24,55 @@
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
         {% for anime in data %}
-          <div class="col">
-            <div class="card shadow-sm" style="min-height: 500px">
-              <a href="{% url 'detail' anime.id %}"><img width="100%%" height="60%" src="{{ anime.attributes.posterImage.large }}" alt="image"></a>
-              <div class="card-body">
-                <p class="card-text">{% if anime.attributes.titles.en %}{{ anime.attributes.titles.en }}{% else %}{{ anime.attributes.titles.en_jp }}{% endif %}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">Rating:  {{ anime.attributes.averageRating }}</small>
-                </div>
+        <div class="col">
+          <div class="card shadow-sm" style="min-height: 500px">
+            <a href="{% url 'detail' anime.id %}"><img width="100%%" height="60%" src="{{ anime.attributes.posterImage.large }}" alt="image"></a>
+            <div class="card-body">
+              <p class="card-text">{% if anime.attributes.titles.en %}{{ anime.attributes.titles.en }}{% else %}{{ anime.attributes.titles.en_jp }}{% endif %}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">Rating: {{ anime.attributes.averageRating }}</small>
               </div>
             </div>
           </div>
+        </div>
         {% endfor %}
       </div>
     </div>
   </div>
+
   <!-- Results end -->
+  <!--Page navigation-->
+  {% if paginator.has_other_pages %}
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center m-0 p-3">
+      <li class="page-item">
+
+        {% if paginator.current == 0 %}
+          <div class="page-link text-muted">Previous</div>
+        {% else %}
+          <a class="page-link text-black" href="javascript:setQueryStringParameter('page', parseInt(findGetParameter('page')) - 1)" tabindex="-1">Previous</a>
+        {% endif %}
+
+      </li>
+
+        {% for x in no_of_pages %}
+          <li class="page-item"><a class="page-link" href="javascript:setQueryStringParameter('page', {{ x }})">{{ x }}</a></li>
+        {% endfor %}
+
+      <li class="page-item">
+
+        {% if paginator.last <= paginator.current %}
+          <div class="page-link text-muted">Next</div>
+        {% else %}
+          <a class="page-link text-black" href="javascript:setQueryStringParameter('page', parseInt(findGetParameter('page')) + 1)">Next</a>
+        {% endif %}
+
+      </li>
+    </ul>
+  </nav>
+  {% endif %}
+  <!--Page navigation end-->
 </div>
+
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
