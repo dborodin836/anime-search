@@ -10,9 +10,9 @@
 <!--Banner image-->
     <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark" style="background-image: url({{ data.attributes.posterImage.original }});">
       <div class="col-md-6 p-4 bg-lg-dark">
-        <h1 class="display-4 fst-italic">{{ data.attributes.titles.en }}</h1>
+        <h1 class="display-4 fst-italic">{% if data.attributes.titles.en %}{{ data.attributes.titles.en }}{% elif data.attributes.titles.en_jp %}{{ data.attributes.titles.en_jp }}{% elif data.attributes.titles.en_us %}{{ data.attributes.titles.en_us }}{% elif data.attributes.titles.ja_jp %}{{ data.attributes.titles.ja_jp }}{% else %}Title Not Found{% endif %}</h1>
         <p class="lead my-3">{{ data.attributes.synopsis }}</p>
-        <p class="lead mb-0 text-white fw-bold">Rating:  {{ data.attributes.averageRating }}</p>
+        <p class="lead mb-0 text-white fw-bold">Rating:  {% if data.attributes.averageRating %}{{ data.attributes.averageRating }}{% else %}Not Found{% endif %}</p>
       </div>
     </div>
 <!--Banner img end-->
@@ -22,9 +22,9 @@
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
           <div class="col p-4 d-flex flex-column position-static" style="min-height: 225px">
             <h3 class="mb-0 text-white">Episode</h3>
-            <div class="mb-1 text-muted">Avg. length:  {{ data.attributes.episodeLength }} min.</div>
-            <p class="card-text mb-1 text-white">No. of episodes:  {{ data.attributes.episodeCount }} ep.</p>
-            <p class="card-text mb-auto text-white">Total length:  {{ data.attributes.totalLength }} min.</p>
+            <div class="mb-1 text-muted">Avg. length:  {% if data.attributes.episodeLength %}{{ data.attributes.episodeLength }}{% else %}Not Found{% endif %} min.</div>
+            <p class="card-text mb-1 text-white">No. of episodes:  {% if data.attributes.episodeCount %}{{ data.attributes.episodeCount }}{% else %}Not Found{% endif %} ep.</p>
+            <p class="card-text mb-auto text-white">Total length:  {% if data.attributes.totalLength %}{{ data.attributes.totalLength }}{% else %}Not Found{% endif %} min.</p>
           </div>
         </div>
       </div>
@@ -32,8 +32,8 @@
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
           <div class="col p-4 d-flex flex-column position-static" style="min-height: 225px">
             <h3 class="mb-0 text-white">Titles</h3>
-            <div class="mb-1 text-muted">Japan:  {{ data.attributes.titles.ja_jp }}</div>
-            <p class="card-text mb-auto text-white">Canonical:  {{ data.attributes.canonicalTitle }}</p>
+            <div class="mb-1 text-muted">Japan:  {% if data.attributes.titles.ja_jp %}{{ data.attributes.titles.ja_jp }}{% else %}Not Found{% endif %}</div>
+            <p class="card-text mb-auto text-white">Canonical:  {% if data.attributes.canonicalTitle %}{{ data.attributes.canonicalTitle }}{% else %}Not Found{% endif %}</p>
           </div>
         </div>
       </div>
@@ -41,14 +41,15 @@
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
           <div class="col p-4 d-flex flex-column position-static" style="min-height: 225px">
             <h3 class="mb-0 text-white">Rating</h3>
-            <div class="mb-1 text-muted">Rating:  {{ data.attributes.averageRating }}</div>
-            <p class="card-text mb-1 text-white">Popularity Rank:   {{ data.attributes.popularityRank }} th</p>
-            <p class="card-text mb-1 text-white">Rating Rank:   {{ data.attributes.ratingRank }} th</p>
+            <div class="mb-1 text-muted">Rating:  {% if data.attributes.averageRating %}{{ data.attributes.averageRating }}{% else %}Not Found{% endif %}</div>
+            <p class="card-text mb-1 text-white">Popularity Rank:   {% if data.attributes.popularityRank %}{{ data.attributes.popularityRank }}{% else %}Not Found{% endif %} th</p>
+            <p class="card-text mb-1 text-white">Rating Rank:   {% if data.attributes.ratingRank %}{{ data.attributes.ratingRank }}{% else %}Not Found{% endif %} th</p>
           </div>
         </div>
       </div>
     </div>
 <!--Attributes end-->
+
     <main>
       <section class="py-3 text-center container">
         <div class="row py-lg-5">
@@ -61,13 +62,13 @@
       <div class="album py-5 bg-lg-dark">
         <div class="container">
 
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
             {% for ep in ep_data %}
             <div class="col">
               <div class="card shadow-sm" style="min-height: 250px">
                 <img width="100%%" height="60%" src="{% if ep.attributes.thumbnail.original %}{{ ep.attributes.thumbnail.original }}{% else %}{% static 'img/not_found.png' %}{% endif %}" alt="image">
                 <div class="card-body">
-                  <p class="card-text">{{ ep.attributes.titles.en_jp }}</p>
+                  <p class="card-text">{% if ep.attributes.titles.en %}{{ ep.attributes.titles.en }}{% elif ep.attributes.titles.en_jp %}{{ ep.attributes.titles.en_jp }}{% elif ep.attributes.titles.en_us %}{{ ep.attributes.titles.en_us }}{% elif ep.attributes.titles.ja_jp %}{{ ep.attributes.titles.ja_jp }}{% else %}Title Not Found{% endif %}</p>
                 </div>
               </div>
             </div>
@@ -75,6 +76,50 @@
           </div>
         </div>
       </div>
+      <!--Page navigation-->
+      {% if paginator.has_other_pages %}
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center m-0 p-3">
+
+          {% if paginator.current == 1 %}
+          <li class="page-item"><div class="page-link text-muted">First</div></li>
+          {% else %}
+          <li class="page-item"><a class="page-link text-black" href="javascript:setQueryStringParameter('page', 1)">First</a></li>
+          {% endif %}
+
+          {% if paginator.current == 1 %}
+          <li class="page-item"><div class="page-link text-muted">Previous</div></li>
+          {% else %}
+          <li class="page-item"><a class="page-link text-black" href="javascript:setQueryStringParameter('page', parseInt(findGetParameter('page')) - 1)" tabindex="-1">Previous</a></li>
+          {% endif %}
+
+          {% for x in paginator.pages_list %}
+          {% if paginator.current == x %}
+          <li class="page-item"><div class="page-link text-muted" href="javascript:setQueryStringParameter('page', {{ x }})">{{ x }}</div></li>
+          {% else %}
+          <li class="page-item"><a class="page-link text-black" href="javascript:setQueryStringParameter('page', {{ x }})">{{ x }}</a></li>
+          {% endif %}
+          {% endfor %}
+
+          <li class="page-item">
+
+            {% if paginator.last <= paginator.current %}
+            <div class="page-link text-muted">Next</div>
+            {% else %}
+            <a class="page-link text-black" href="javascript:setQueryStringParameter('page', parseInt(findGetParameter('page')) + 1)">Next</a>
+            {% endif %}
+
+            {% if paginator.current == paginator.last %}
+          <li class="page-item"><div class="page-link text-muted">Last</div></li>
+          {% else %}
+          <li class="page-item"><a class="page-link text-black" href="javascript:setQueryStringParameter('page', {{ paginator.last }})">Last</a></li>
+          {% endif %}
+
+          </li>
+        </ul>
+      </nav>
+      {% endif %}
+      <!--Page navigation end-->
     </main>
   </main>
 </div>

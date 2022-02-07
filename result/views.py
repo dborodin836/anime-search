@@ -20,22 +20,22 @@ def search(request):
             # I shouldn't do it, this bug can be fixed in JS
             if current_page < 0:
                 current_page = 0
-            
+
             # Compensate that loops starts from 0
             current_page -= 1
-            
+
             # Request vars
             page_offset = current_page * 10
             keyword = request.GET['keyword']
-            
+
             response = requests.get(
                 f'https://kitsu.io/api/edge/anime?filter[text]={keyword}&page[offset]={page_offset}')
-            
+
             raw_data = json.loads(response.text)
-            
+
             results = raw_data['meta']['count']  # Amount of the found results
             last_page = ceil(results / 10) - 1
-            
+
             # Last clickable page
             current_last_page = current_page + 5
             if current_last_page > last_page:
@@ -46,9 +46,10 @@ def search(request):
                 current_first_page = current_page - 5
             else:
                 current_first_page = 1
-            
+
             # Generates list of possible links to pages
-            pages_list = [x for x in range(current_first_page + 2 if current_first_page > 3 else current_first_page, current_page + 1)]
+            pages_list = [x for x in range(current_first_page + 2 if current_first_page > 3 else current_first_page,
+                                           current_page + 1)]
             pages_list.extend([x + 1 for x in range(current_page, current_last_page)])
 
             paginator = {
