@@ -9,7 +9,7 @@
 
   <!-- Banner -->
   <div class="container col-xxl-8 px-4 py-5">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-4">
       <div class="col-10 col-sm-8 col-lg-6">
         <img src="{% static 'img/banner.png' %}" class="d-block mx-lg-auto img-fluid" alt="Banner" width="700" height="500" loading="lazy">
       </div>
@@ -33,7 +33,7 @@
       <form action="{% url 'search' %}" method="GET">
         <div class="form-group">
           <input class="form-control form-control-lg" type="text" placeholder="Search" name="keyword">
-          <input type="text" hidden value="0" name="page">
+          <input type="text" hidden value="1" name="page">
         </div>
         <div class="form-group text-center mt-5">
           <button type="submit" class="fs-2 btn btn-outline-secondary btn-lg px-4 text-white">Search!</button>
@@ -47,7 +47,7 @@
   <div class="bg-lg-dark text-secondary px-4 py-5 text-center">
     <div class="py-5">
       <div class="col-lg-6 mx-auto">
-        <p class="fs-5 mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+        <p class="fs-5 mb-4">This site can search anime, powered by Kitsu API.</p>
       </div>
     </div>
   </div>
